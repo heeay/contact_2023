@@ -9,13 +9,12 @@ const ContactDetail = props => {
     const setContactList = props.setContactList;
   
     function deleteContact(e){
-        
-        axios.delete('/contact/' + e.target.name)
-             .then(result => {
-                if(result.data == 'success'){
-                    props.isFlag(!props.flag);
-                }
-             })
+           axios.delete('/contact/' + e.target.id)
+                .then(result => {
+                   if(result.data == 'success'){
+                       props.isFlag(!props.flag);
+                   }
+                })
     }
 
     const navigate = useNavigate();
@@ -39,7 +38,10 @@ const ContactDetail = props => {
                 <p>{contact.phone}</p>
             </div>
             <div>
-                <button onClick={deleteContact} name={contact.name}>삭제</button>
+                <p>{contact.lastDate}</p>
+            </div>
+            <div>
+                <button onClick={deleteContact} id={contact.name}>삭제</button>
             </div>
         </>
     )

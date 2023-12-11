@@ -7,27 +7,31 @@ const ContactSource = props => {
 
     const [contactList, setContactList] = useState([]);
 
-    const [name, setName] = useState('');
-    const [image, setImage] = useState('');
-    const [group, setGroup] = useState('');
-    const [phone, setPhone] = useState('');
-    const [contactPeriod, setContactPeriod] = useState('');
+    const [nameValue, setNameValue] = useState('');
+    const [imageValue, setImageValue] = useState('');
+    const [groupValue, setGroupValue] = useState('');
+    const [phoneValue, setPhoneValue] = useState('');
+    const [lastDateValue, setLastDateValue] = useState('');
+    const [contactPeriodValue, setContactPeriodValue] = useState('');
 
     /** setting함수로 입력값 받기 */
     const inputName = e => {
-        setName(e.target.value);
+        setNameValue(e.target.value);
     }
     const inputImage = e => {
-        setImage(e.target.value);
+        setImageValue(e.target.value);
     }
     const inputGroup = e => {
-        setGroup(e.target.value);
+        setGroupValue(e.target.value);
     }
     const inputPhone = e => {
-        setPhone(e.target.value);
+        setPhoneValue(e.target.value);
+    }
+    const inputLastDate = e => {
+        setLastDateValue(e.target.value);
     }
     const inputContactPeriod = e => {
-        setContactPeriod(e.target.value);
+        setContactPeriodValue(e.target.value);
     }
 
     /**변경여부를 확인하는 용도의 state */
@@ -37,15 +41,16 @@ const ContactSource = props => {
     const addContact = () => {
 
         // input을 다 채웠다면
-        if(inputName && inputImage && inputGroup && inputPhone && inputContactPeriod){
+        if(nameValue && imageValue && groupValue && phoneValue && lastDateValue && contactPeriodValue){
 
             // 연락처 생성하고
             const contact = {
-                name : name, 
-                image : image,
-                group : group,
-                phone : phone, 
-                contactPeriod : contactPeriod
+                name : nameValue, 
+                image : imageValue,
+                group : groupValue,
+                phone : phoneValue, 
+                lastDate : lastDateValue,
+                contactPeriod : contactPeriodValue
             }
 
             // DB로 비동기요청
@@ -58,11 +63,12 @@ const ContactSource = props => {
                  });
                 
             // 입력후 초기화
-            setName('');
-            setImage('');
-            setGroup('');
-            setPhone('');
-            setContactPeriod('');
+            setNameValue('');
+            setImageValue('');
+            setGroupValue('');
+            setPhoneValue('');
+            setLastDateValue('');
+            setContactPeriodValue('');
 
         } else {
             alert('모든 항목을 입력해주세요!');
@@ -94,23 +100,27 @@ const ContactSource = props => {
         <div id="contact-enroll-form">
             <div>
                 <h3>이름</h3>
-                <input onChange={inputName} value={name} />
+                <input onChange={inputName} value={nameValue} />
             </div>
             <div>
                 <h3>프로필사진</h3>
-                <input onChange={inputImage} value={image} />
+                <input onChange={inputImage} value={imageValue} />
             </div>
             <div>
                 <h3>그룹</h3>
-                <input onChange={inputGroup} value={group} />
+                <input onChange={inputGroup} value={groupValue} />
             </div>
             <div>
                 <h3>전화번호</h3>
-                <input onChange={inputPhone} value={phone} />
+                <input onChange={inputPhone} value={phoneValue} />
+            </div>
+            <div>
+                <h3>마지막 연락일</h3>
+                <input onChange={inputLastDate} value={lastDateValue} />
             </div>
             <div>
                 <h3>연락주기</h3>
-                <input onChange={inputContactPeriod} value={contactPeriod} />
+                <input onChange={inputContactPeriod} value={contactPeriodValue} />
             </div>
             <br/>
             <button onClick={addContact}>연락처 추가</button>

@@ -3,6 +3,8 @@ import './App.css';
 import { Route, Routes } from 'react-router-dom';
 import ContactSource from "./component/ContactSource";
 import ContactDetail from "./component/ContactDetail";
+import DetailPage from './component/DetailPage';
+
 
 
 function App() {
@@ -14,8 +16,9 @@ function App() {
       <h1>안녕</h1>
       <Routes>
         <Route path="/" element={<ContactSource/>}/>
-        <Route path="/contact" element={<ContactDetail/>}/> 
-        <Route path="*" element={<h1>잘못된 페이지 요청입니당</h1>}/>
+        <Route path="/detailPage" element={<DetailPage/>}/>
+        {/* <Route path="/contact" element={<ContactDetail/>}/>  */}
+        {/* <Route path="*" element={<h1>잘못된 페이지 요청입니당</h1>}/> */}
       </Routes>
     </>
   );
