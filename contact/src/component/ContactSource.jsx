@@ -6,33 +6,39 @@ import { useEffect, useState } from 'react';
 const ContactSource = props => {
 
     const [contactList, setContactList] = useState([]);
+    const [historyList, setHistoryList] = useState([]);
 
-    const [nameValue, setNameValue] = useState('');
-    const [imageValue, setImageValue] = useState('');
-    const [groupValue, setGroupValue] = useState('');
-    const [phoneValue, setPhoneValue] = useState('');
-    const [lastDateValue, setLastDateValue] = useState('');
-    const [contactPeriodValue, setContactPeriodValue] = useState('');
+    const [contactName, setContactName] = useState('');
+    const [contactImage, setContactImage] = useState('');
+    const [contactGroup, setContactGroup] = useState('');
+    const [contactPhone, setContactPhone] = useState('');
+    const [contactPeriod, setContactPeriod] = useState('');
+    const [contactContent, setContactContent] = useState('');
 
     /** setting함수로 입력값 받기 */
-    const inputName = e => {
-        setNameValue(e.target.value);
+    const inputContactName = e => {
+        setContactName(e.target.value);
     }
-    const inputImage = e => {
-        setImageValue(e.target.value);
+    const inputContactImage = e => {
+        setContactImage(e.target.value);
     }
-    const inputGroup = e => {
-        setGroupValue(e.target.value);
+    const inputContactGroup = e => {
+        setContactGroup(e.target.value);
     }
-    const inputPhone = e => {
-        setPhoneValue(e.target.value);
-    }
-    const inputLastDate = e => {
-        setLastDateValue(e.target.value);
+    const inputContactPhone = e => {
+        setContactPhone(e.target.value);
     }
     const inputContactPeriod = e => {
-        setContactPeriodValue(e.target.value);
+        setContactPeriod(e.target.value);
     }
+
+
+    const inputContactContent = e => {
+        setContactContent(e.target.value);
+    }
+
+
+
 
     /**변경여부를 확인하는 용도의 state */
     const [flag, isFlag] = useState(false);
@@ -41,36 +47,60 @@ const ContactSource = props => {
     const addContact = () => {
 
         // input을 다 채웠다면
-        if(nameValue && imageValue && groupValue && phoneValue && lastDateValue && contactPeriodValue){
+        if(contactName && contactImage && contactGroup && contactPhone && contactPeriod){
 
             // 연락처 생성하고
             const contact = {
-                name : nameValue, 
-                image : imageValue,
-                group : groupValue,
-                phone : phoneValue, 
-                lastDate : lastDateValue,
-                contactPeriod : contactPeriodValue
+                contactName : contactName, 
+                contactImage : contactImage,
+                contactGroup : contactGroup,
+                contactPhone : contactPhone, 
+                contactPeriod : contactPeriod
             }
 
             // DB로 비동기요청
             axios.post('/contact', contact)
                  .then(result => {
-                    //console.log(result.data);
-                    if(result.data == 'success'){
-                        isFlag(!flag);//플래그 변경
+                    console.log(result);
+                    if(result.data === 'success'){
+                        isFlag(!flag);
                     }
                  });
                 
             // 입력후 초기화
-            setNameValue('');
-            setImageValue('');
-            setGroupValue('');
-            setPhoneValue('');
-            setLastDateValue('');
-            setContactPeriodValue('');
+            setContactName('');
+            setContactImage('');
+            setContactGroup('');
+            setContactPhone('');
+            setContactPeriod('');
 
         } else {
+            alert('모든 항목을 입력해주세요!');
+        }
+    }
+
+    /** 연락기록 추가하는 함수 */
+    const addHistory = e => {
+
+        if(inputContactName && inputContactContent){
+
+            const history = {
+                contactName : contactName, 
+                contactContent : contactContent
+            }
+
+        axios.post('/contact/' + e.target.id , history)
+        .then(result => {
+            console.log(e.target.id);
+            if(result.data === 'success'){
+                isFlag(!flag);
+            }
+        });
+
+        setContactName('');
+        setContactContent('');
+
+        }else {
             alert('모든 항목을 입력해주세요!');
         }
     }
@@ -79,11 +109,11 @@ const ContactSource = props => {
     useEffect( () => {
         axios.get('/contact')
              .then(result => {
-                console.log(result.data);
                 let copyArr = [...result.data];
                 setContactList(copyArr);
              })
     }, [flag]);
+
 
     return(
         <>
@@ -91,39 +121,47 @@ const ContactSource = props => {
         {
             contactList.map((contact, index) => {
                 return(
-                    <ContactDetail contact={contact} key={index} setContactList={setContactList} contactList={contactList} isFlag={isFlag} flag={flag} />
+                    <ContactDetail contact={contact} key={index} historyList={historyList} setHistoryList ={setHistoryList}  setContactList={setContactList} contactList={contactList} isFlag={isFlag} flag={flag} />
                 )
             })
         }
 
-        {/*모달창을 띄울까?*/}
         <div id="contact-enroll-form">
             <div>
                 <h3>이름</h3>
-                <input onChange={inputName} value={nameValue} />
+                <input onChange={inputContactName} value={contactName} />
             </div>
             <div>
                 <h3>프로필사진</h3>
-                <input onChange={inputImage} value={imageValue} />
+                <input onChange={inputContactImage} value={contactImage} />
             </div>
             <div>
                 <h3>그룹</h3>
-                <input onChange={inputGroup} value={groupValue} />
+                <input onChange={inputContactGroup} value={contactGroup} />
             </div>
             <div>
                 <h3>전화번호</h3>
-                <input onChange={inputPhone} value={phoneValue} />
-            </div>
-            <div>
-                <h3>마지막 연락일</h3>
-                <input onChange={inputLastDate} value={lastDateValue} />
+                <input onChange={inputContactPhone} value={contactPhone} />
             </div>
             <div>
                 <h3>연락주기</h3>
-                <input onChange={inputContactPeriod} value={contactPeriodValue} />
+                <input onChange={inputContactPeriod} value={contactPeriod} />
             </div>
             <br/>
             <button onClick={addContact}>연락처 추가</button>
+        </div>
+
+        <div id="history-enroll-form">
+            <div>
+                <h3>이름</h3>
+                <input onChange={inputContactName} value={contactName} />
+            </div>
+            <div>
+                <h3>연락내용</h3>
+                <input onChange={inputContactImage} value={contactImage} />
+            </div>
+            <br/>
+            <button onClick={addHistory} id={contactName}>연락내용 추가</button>
         </div>
         </>
     )

@@ -5,6 +5,7 @@ const ContactDetail = props => {
 
     /**상위컴포넌트에서 props로 받아온 값 뽑아내기 */
     const contact = props.contact;
+    const historyList = props.historyList;
     const contactList = props.contactList;
     const setContactList = props.setContactList;
   
@@ -20,28 +21,25 @@ const ContactDetail = props => {
     const navigate = useNavigate();
 
     const detailPage = () => {
-       navigate('/detailPage', {state : contact});
+       navigate('/detailPage', {state : contact, historyList : historyList});
     }
 
     return (
         <>
             <div>
-                <img src={contact.image} alt="" onClick={detailPage}/>
+                <img src={contact.contactImage} alt="연락처" onClick={detailPage}/>
             </div>
             <div>
-                <p>{contact.name}</p>
+                <p>{contact.contactName}</p>
             </div>
             <div>
-                <p>{contact.group}</p>
+                <p>{contact.contactGroup}</p>
             </div>
             <div>
-                <p>{contact.phone}</p>
+                <p>{contact.contactPhone}</p>
             </div>
             <div>
-                <p>{contact.lastDate}</p>
-            </div>
-            <div>
-                <button onClick={deleteContact} id={contact.name}>삭제</button>
+                <button onClick={deleteContact} id={contact.contactName}>삭제</button>
             </div>
         </>
     )
