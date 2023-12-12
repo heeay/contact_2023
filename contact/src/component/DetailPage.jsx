@@ -36,7 +36,7 @@ const DetailPage = () => {
                     return(
                         <HistoryDetail key={index} history={history} />
                     )
-                    })
+                })
                 }
             </Container>
             <br/>

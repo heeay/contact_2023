@@ -61,7 +61,6 @@ const ContactSource = props => {
             // DB로 비동기요청
             axios.post('/contact', contact)
                  .then(result => {
-                    console.log(result);
                     if(result.data === 'success'){
                         isFlag(!flag);
                     }
@@ -89,9 +88,8 @@ const ContactSource = props => {
                 contactContent : contactContent
             }
 
-        axios.post('/contact/' + e.target.id , history)
-        .then(result => {
-            console.log(e.target.id);
+        axios.post('/contact/' + e.target.id, history)
+             .then(result => {
             if(result.data === 'success'){
                 isFlag(!flag);
             }
@@ -117,7 +115,6 @@ const ContactSource = props => {
 
     return(
         <>
-        {/* <Header /> */}
         {
             contactList.map((contact, index) => {
                 return(
