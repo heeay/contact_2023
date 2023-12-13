@@ -155,7 +155,7 @@ const ContactSource = props => {
             </div>
             <div>
                 <h3>연락내용</h3>
-                <input onChange={inputContactImage} value={contactImage} />
+                <input onChange={inputContactContent} value={contactContent} />
             </div>
             <br/>
             <button onClick={addHistory} id={contactName}>연락내용 추가</button>

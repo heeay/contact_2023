@@ -21,7 +21,7 @@ const ContactDetail = props => {
     const navigate = useNavigate();
 
     const detailPage = () => {
-       navigate('/detailPage', {state : contact, historyList : historyList});
+       navigate("/detailPage", {state : contact});
     }
 
     return (

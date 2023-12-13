@@ -13,7 +13,7 @@ function App() {
 
   return (
     <>
-      <h1>안녕</h1>
+      <h1>연락망</h1>
       <Routes>
         <Route path="/" element={<ContactSource/>}/>
         <Route path="/detailPage" element={<DetailPage/>}/>

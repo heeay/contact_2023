@@ -31,13 +31,13 @@ const DetailPage = () => {
                 <Row>
                     <Col xs={6}><p>{state.contactHistory}</p></Col>
                 </Row>
-                {
+                {/* {
                 historyList.map((history, index) => {
                     return(
                         <HistoryDetail key={index} history={history} />
                     )
                 })
-                }
+                } */}
             </Container>
             <br/>
             <Button variant="dark" size="lg" onClick={back}>Back</Button>
