@@ -58,15 +58,7 @@ public class ContactController {
 		header.setContentType(new MediaType("text", "html", Charset.forName("UTF-8")));
 		return new ResponseEntity<String>(insert, header, HttpStatus.OK);
 	}
-	
-	// 연락처 수정
-//	@PutMapping
-//	public ResponseEntity<String>updateSource(@RequestBody ContactSource contactSource){
-//		String update = contactService.updateSource(contactSource) != 0 ? "success" : "fail";
-//		HttpHeaders header = new HttpHeaders();
-//		header.setContentType(new MediaType("text", "html", Charset.forName("UTF-8")));
-//		return new ResponseEntity<String>(update, header, HttpStatus.OK);
-//	}
+
 	
 	// 연락처 삭제
 	@DeleteMapping("/{contactName}")
@@ -78,63 +70,77 @@ public class ContactController {
 	}
 	
 	
+
+	
+	// 연락기록 추가  +  곧바로 해당인물의 lastDate를 업데이트 
+	@PostMapping("/history/{contactName}")
+	public ResponseEntity<String>insertHistory(
+												@RequestBody ContactHistory contactHistory,
+												@PathVariable(name="contactName")String contactName){
+		String insert = contactService.insertHistory(contactHistory) != 0 ? "success" : "fail";
+		HttpHeaders header = new HttpHeaders();
+		header.setContentType(new MediaType("text", "html", Charset.forName("UTF-8")));
+		return new ResponseEntity<String>(insert, header, HttpStatus.OK);
+	}
 	
 
-		
-		
+	
 	/*
-	 * // 특정 연락기록만 조회
-	 * 
-	 * @GetMapping("/{contactNo}") public ResponseEntity<ContactHistory>
-	 * selectHistory(@PathVariable(name="contactNo")int contactNo){ ContactHistory
-	 * history= contactService.selectHistory(contactNo); HttpHeaders header = new
-	 * HttpHeaders(); header.setContentType(new MediaType("application", "json",
-	 * Charset.forName("UTF-8"))); return new
-	 * ResponseEntity<ContactHistory>(history, header, HttpStatus.OK); }
-	 */
-		
-		// 연락기록 추가  +  곧바로 해당인물의 lastDate를 업데이트 
-		@PostMapping("/{contactName}")
-		public ResponseEntity<String>insertHistory(
-															@RequestBody ContactHistory contactHistory,
-															@PathVariable(name="contactName")String contactName){
-			String insert = contactService.insertHistory(contactHistory) != 0 ? "success" : "fail";
-			HttpHeaders header = new HttpHeaders();
-			header.setContentType(new MediaType("text", "html", Charset.forName("UTF-8")));
-			return new ResponseEntity<String>(insert, header, HttpStatus.OK);
-		}
-		
-	/*
-	 * // 연락기록 수정 *****************************************************
-	 * 
-	 * @PutMapping public ResponseEntity<String>updateHistory(@RequestBody
-	 * ContactHistory contactHistory){ String update =
-	 * contactService.updateHistory(contactHistory) != 0 ? "success" : "fail";
-	 * HttpHeaders header = new HttpHeaders(); header.setContentType(new
-	 * MediaType("text", "html", Charset.forName("UTF-8"))); return new
-	 * ResponseEntity<String>(update, header, HttpStatus.OK); }
-	 */
-		
-		// 연락기록 삭제
-//		@DeleteMapping("/{contactNo}")
-//		public ResponseEntity<String>deleteHistory(@PathVariable(name="contactNo")int contactNo){
-//			String delete = contactService.deleteHistory(contactNo) != 0 ? "success" : "fail";
-//			HttpHeaders header = new HttpHeaders();
-//			header.setContentType(new MediaType("text", "html", Charset.forName("UTF-8")));
-//			return new ResponseEntity<String>(delete, header, HttpStatus.OK);
-//		}
-		
-	/*
-	 * // 특정인물의 모든 연락기록 삭제
-	 * 
-	 * @DeleteMapping("/{contactName}") public
-	 * ResponseEntity<String>deleteAllHistory(@PathVariable(name="contactName")
-	 * String contactName){ String deleteAll =
-	 * contactService.deleteAllHistory(contactName) != 0 ? "success" : "fail";
-	 * HttpHeaders header = new HttpHeaders(); header.setContentType(new
-	 * MediaType("text", "html", Charset.forName("UTF-8"))); return new
-	 * ResponseEntity<String>(deleteAll, header, HttpStatus.OK); }
-	 */
+	// 모든 연락기록만 조회
+	@GetMapping
+	public ResponseEntity<List<ContactHistory>> selectHistoryList(String contactName){ 
+		List<ContactHistory> historyList = contactService.selectHistoryList(contactName);
+		HttpHeaders header = new HttpHeaders();
+		header.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
+		return new ResponseEntity<List<ContactHistory>>(historyList, header, HttpStatus.OK);
+	}
+	
+	
+	// 특정 연락기록만 조회 
+	@GetMapping("/{contactNo}")
+	public ResponseEntity<ContactHistory> selectHistory(@PathVariable(name="contactNo")int contactNo){
+		ContactHistory history= contactService.selectHistory(contactNo);
+		HttpHeaders header = new HttpHeaders();
+		header.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
+		return new ResponseEntity<ContactHistory>(history, header, HttpStatus.OK);
+	}
+	
+	// 연락기록 추가  +  곧바로 해당인물의 lastDate를 업데이트 
+	@PostMapping
+	public ResponseEntity<String>insertHistory(@RequestBody ContactHistory contactHistory){
+		String insert = contactService.insertHistory(contactHistory) != 0 ? "success" : "fail";
+		HttpHeaders header = new HttpHeaders();
+		header.setContentType(new MediaType("text", "html", Charset.forName("UTF-8")));
+		return new ResponseEntity<String>(insert, header, HttpStatus.OK);
+	}
+	
+	// 연락기록 수정 *****************************************************
+	@PutMapping
+	public ResponseEntity<String>updateHistory(@RequestBody ContactHistory contactHistory){
+		String update = contactService.updateHistory(contactHistory) != 0 ? "success" : "fail";
+		HttpHeaders header = new HttpHeaders();
+		header.setContentType(new MediaType("text", "html", Charset.forName("UTF-8")));
+		return new ResponseEntity<String>(update, header, HttpStatus.OK);
+	}
+	
+	// 연락기록 삭제
+	@DeleteMapping("/{contactNo}")
+	public ResponseEntity<String>deleteHistory(@PathVariable(name="contactNo")int contactNo){
+		String delete = contactService.deleteHistory(contactNo) != 0 ? "success" : "fail";
+		HttpHeaders header = new HttpHeaders();
+		header.setContentType(new MediaType("text", "html", Charset.forName("UTF-8")));
+		return new ResponseEntity<String>(delete, header, HttpStatus.OK);
+	}
+	
+	// 특정인물의 모든 연락기록 삭제
+	@DeleteMapping("/{contactName}")
+	public ResponseEntity<String>deleteAllHistory(@PathVariable(name="contactName")String contactName){
+		String deleteAll = contactService.deleteAllHistory(contactName) != 0 ? "success" : "fail";
+		HttpHeaders header = new HttpHeaders();
+		header.setContentType(new MediaType("text", "html", Charset.forName("UTF-8")));
+		return new ResponseEntity<String>(deleteAll, header, HttpStatus.OK);
+	}*/
+	
 		
 	
 

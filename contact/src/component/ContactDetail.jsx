@@ -5,14 +5,14 @@ const ContactDetail = props => {
 
     /**상위컴포넌트에서 props로 받아온 값 뽑아내기 */
     const contact = props.contact;
-    const historyList = props.historyList;
     const contactList = props.contactList;
     const setContactList = props.setContactList;
   
+    
     function deleteContact(e){
            axios.delete('/contact/' + e.target.id)
                 .then(result => {
-                   if(result.data == 'success'){
+                   if(result.data === 'success'){
                        props.isFlag(!props.flag);
                    }
                 })
@@ -21,7 +21,7 @@ const ContactDetail = props => {
     const navigate = useNavigate();
 
     const detailPage = () => {
-       navigate("/detailPage", {state : contact});
+       navigate("/detailPage", {state : {contact : contact }});
     }
 
     return (

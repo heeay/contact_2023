@@ -6,14 +6,14 @@ import { useEffect, useState } from 'react';
 const ContactSource = props => {
 
     const [contactList, setContactList] = useState([]);
-    const [historyList, setHistoryList] = useState([]);
+    
 
     const [contactName, setContactName] = useState('');
     const [contactImage, setContactImage] = useState('');
     const [contactGroup, setContactGroup] = useState('');
     const [contactPhone, setContactPhone] = useState('');
     const [contactPeriod, setContactPeriod] = useState('');
-    const [contactContent, setContactContent] = useState('');
+  
 
     /** setting함수로 입력값 받기 */
     const inputContactName = e => {
@@ -33,9 +33,7 @@ const ContactSource = props => {
     }
 
 
-    const inputContactContent = e => {
-        setContactContent(e.target.value);
-    }
+ 
 
 
 
@@ -78,47 +76,23 @@ const ContactSource = props => {
         }
     }
 
-    /** 연락기록 추가하는 함수 */
-    const addHistory = e => {
-
-        if(inputContactName && inputContactContent){
-
-            const history = {
-                contactName : contactName, 
-                contactContent : contactContent
-            }
-
-        axios.post('/contact/' + e.target.id, history)
-             .then(result => {
-            if(result.data === 'success'){
-                isFlag(!flag);
-            }
-        });
-
-        setContactName('');
-        setContactContent('');
-
-        }else {
-            alert('모든 항목을 입력해주세요!');
-        }
-    }
-
     /**페이지 마운트될 때 가장 먼저 실행되는 코드 */
     useEffect( () => {
         axios.get('/contact')
              .then(result => {
-                let copyArr = [...result.data];
-                setContactList(copyArr);
+                console.log(result.data);
+                let sourceCopyArr = [...result.data];
+                setContactList(sourceCopyArr);
+                //setHistoryList(hist)
              })
     }, [flag]);
-
 
     return(
         <>
         {
             contactList.map((contact, index) => {
                 return(
-                    <ContactDetail contact={contact} key={index} historyList={historyList} setHistoryList ={setHistoryList}  setContactList={setContactList} contactList={contactList} isFlag={isFlag} flag={flag} />
+                    <ContactDetail contact={contact} key={index} setContactList={setContactList} contactList={contactList} isFlag={isFlag} flag={flag} />
                 )
             })
         }
@@ -148,18 +122,7 @@ const ContactSource = props => {
             <button onClick={addContact}>연락처 추가</button>
         </div>
 
-        <div id="history-enroll-form">
-            <div>
-                <h3>이름</h3>
-                <input onChange={inputContactName} value={contactName} />
-            </div>
-            <div>
-                <h3>연락내용</h3>
-                <input onChange={inputContactContent} value={contactContent} />
-            </div>
-            <br/>
-            <button onClick={addHistory} id={contactName}>연락내용 추가</button>
-        </div>
+  
         </>
     )
 }
