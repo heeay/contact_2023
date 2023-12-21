@@ -73,7 +73,6 @@ public class ContactController {
 
 	
 	// 연락기록 추가  +  곧바로 해당인물의 lastDate를 업데이트 
-	@SuppressWarnings("null")
 	@PostMapping("/history/{contactName}")
 	public ResponseEntity<String>insertHistory(
 												@RequestBody String contactContent,

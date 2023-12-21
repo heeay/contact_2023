@@ -80,7 +80,7 @@ const ContactSource = props => {
     useEffect( () => {
         axios.get('/contact')
              .then(result => {
-                console.log(result.data);
+               //console.log(result.data);
                 let sourceCopyArr = [...result.data];
                 setContactList(sourceCopyArr);
                 //setHistoryList(hist)

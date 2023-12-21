@@ -10,15 +10,15 @@ import axios from "axios";
 const DetailPage = () => {
 
     const {state} = useLocation();
+    console.log(state.contact.contactName,);
+    console.log({state});
     const [historyList, setHistoryList] = useState([]);
     //const {historyList} = useLocation();
-    
+
     const navigate = useNavigate();
     const back = () => {
         navigate(-1);
     }
-    console.log({state});
-    console.log(state);
 
     const [contactContent, setContactContent] = useState('');
     const inputContactContent = e => {
@@ -36,7 +36,7 @@ const DetailPage = () => {
                 contactName : state.contact.contactName,
                 contactContent : contactContent
             }
-            console.log(history);
+           // console.log(history);
 
         axios.post('/contact/history/' + e.target.id, history)
              .then(result => {
@@ -55,7 +55,7 @@ const DetailPage = () => {
     useEffect( () => {
         axios.get('/contact/' + state.contact.contactName)
              .then(result => {
-                console.log(result.data.contactHistory);
+               console.log(result.data.contactHistory);
                 let historyCopyArr = [...result.data.contactHistory];
                 setHistoryList(historyCopyArr);        
              })

@@ -73,15 +73,11 @@ public class ContactController {
 
 	
 	// 연락기록 추가  +  곧바로 해당인물의 lastDate를 업데이트 
-	@SuppressWarnings("null")
 	@PostMapping("/history/{contactName}")
 	public ResponseEntity<String>insertHistory(
 												@RequestBody String contactContent,
 												@PathVariable(name="contactName")String contactName){
-		ContactHistory contactHistory = null;
-		contactHistory.setContactName(contactName);
-		contactHistory.setContactContent(contactContent);
-		String insert = contactService.insertHistory(contactHistory) != 0 ? "success" : "fail";
+		String insert = contactService.insertHistory(contactContent,contactName) != 0 ? "success" : "fail";
 		HttpHeaders header = new HttpHeaders();
 		header.setContentType(new MediaType("text", "html", Charset.forName("UTF-8")));
 		return new ResponseEntity<String>(insert, header, HttpStatus.OK);
