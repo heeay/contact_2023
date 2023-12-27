@@ -49,11 +49,11 @@ public class ContactServiceImpl implements ContactService {
 return contactMapper.deleteSource(contactName); 
 }
  
-	
-	 @Override public List<ContactHistory> selectHistoryList(String contactName) {
-	  
-	  return contactMapper.selectHistoryList(contactName); }
-	
+	/*
+	 * @Override public List<ContactHistory> selectHistoryList(String contactName) {
+	 * 
+	 * return contactMapper.selectHistoryList(contactName); }
+	 */
  
 	/*
 	 * @Override public ContactHistory selectHistory(int contactNo) {

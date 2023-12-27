@@ -53,7 +53,7 @@ const DetailPage = () => {
     }
 
     useEffect( () => {
-        axios.get('/contact/' + state.contact.contactName)
+        axios.get('/contact/history' + state.contact.contactName)
              .then(result => {
                console.log(result.data.contactHistory);
                 let historyCopyArr = [...result.data.contactHistory];

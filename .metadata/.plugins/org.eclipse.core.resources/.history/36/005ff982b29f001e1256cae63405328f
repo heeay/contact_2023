@@ -17,7 +17,7 @@ public interface ContactMapper {
 	 int updateSource(ContactSource contactSource); 
 	 int deleteSource(String contactName);
 	
-	 List<ContactHistory> selectHistoryList(String contactName); 
+	 //List<ContactHistory> selectHistoryList(String contactName); 
 	 ContactHistory selectHistory(int contactNo);
 
 	 int insertHistory(ContactHistory contactHistory);

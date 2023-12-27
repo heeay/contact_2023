@@ -39,7 +39,7 @@ public class ContactController {
 		return new ResponseEntity<List<ContactSource>>(sourceList, header, HttpStatus.OK);
 	}
 	
-	// 연락처 세부조회 
+	// 연락처 세부조회 및 연락기록 전체조회
 	@GetMapping("/{contactName}")
 	public ResponseEntity<ContactSource> selectSource(@PathVariable(name="contactName")String contactName){
 		ContactSource source= contactService.selectSource(contactName);
@@ -70,14 +70,7 @@ public class ContactController {
 	}
 	
 	
-	//연락기록전체조회
-	@GetMapping("/history/{contactName}")
-	public ResponseEntity<List<ContactHistory>> selectHistoryList(@PathVariable(name="contactName")String contactName){ 
-		List<ContactHistory> historyList = contactService.selectHistoryList(contactName);
-		HttpHeaders header = new HttpHeaders();
-		header.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
-		return new ResponseEntity<List<ContactHistory>>(historyList, header, HttpStatus.OK);
-	}
+
 	
 	// 연락기록 추가  +  곧바로 해당인물의 lastDate를 업데이트 
 	@SuppressWarnings("null")

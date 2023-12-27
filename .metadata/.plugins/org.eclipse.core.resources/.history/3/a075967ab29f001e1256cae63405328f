@@ -72,8 +72,8 @@ public class ContactController {
 	
 	//연락기록전체조회
 	@GetMapping("/history/{contactName}")
-	public ResponseEntity<List<ContactHistory>> selectHistoryList(@PathVariable(name="contactName")String contactName){ 
-		List<ContactHistory> historyList = contactService.selectHistoryList(contactName);
+	public ResponseEntity<List<ContactHistory>> selectHistoryList(){ 
+		List<ContactHistory> historyList = contactService.selectHistoryList();
 		HttpHeaders header = new HttpHeaders();
 		header.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
 		return new ResponseEntity<List<ContactHistory>>(historyList, header, HttpStatus.OK);
