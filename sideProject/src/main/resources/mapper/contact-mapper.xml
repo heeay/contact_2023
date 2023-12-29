@@ -119,7 +119,7 @@
 	
 	
 	<!-- 모든 연락기록만 조회 -->
-<!-- 	<select id="selectHistoryList" resultMap="historyMap" parameterType="string">
+<select id="selectHistoryList" resultMap="historyMap" parameterType="string">
 		SELECT 
 						CONTACT_NO,
 						CONTACT_CONTENT,
@@ -132,24 +132,8 @@
 		BY
 						CONTACT_NO
 	
-	</select>  -->
-	
-	<!-- 특정 연락기록만 조회 -->
-	<select id="selectHistory" resultMap="historyMap" parameterType="_int">
-		SELECT 
-						CONTACT_NAME,
-						CONTACT_NO,
-						CONTACT_CONTENT,
-						CONTACT_DATE
-		FROM
-						CONTACT_SOURCE
-		WHERE
-						CONTACT_NO = #{ contactNo }
-		ORDER
-		BY
-						CONTACT_NO
-	
 	</select>
+	
 	
 	<!-- 연락기록 추가 -->
 	<insert id="insertHistory" parameterType="ContactHistory">
@@ -164,6 +148,7 @@
 						SYSDATE
 						)
 	</insert>
+	
 	<!-- 곧바로 해당인물의 lastDate를 업데이트 => transational -->
 	<update id="updateLastDate" parameterType="ContactHistory">
 		UPDATE

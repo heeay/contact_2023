@@ -5,7 +5,7 @@ const HistoryDetail = props => {
     return (
         <>
             <div>
-                <h1>{history.contactDate}</h1>
+                <p>{history.contactDate}</p>
             </div>
             <div>
                 <p>{history.contactContent}</p>

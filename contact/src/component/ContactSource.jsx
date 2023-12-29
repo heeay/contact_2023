@@ -3,7 +3,7 @@ import ContactDetail from './ContactDetail';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 
-const ContactSource = props => {
+const ContactSource = () => {
 
     const [contactList, setContactList] = useState([]);
     
@@ -80,10 +80,11 @@ const ContactSource = props => {
     useEffect( () => {
         axios.get('/contact')
              .then(result => {
+                console.log(result);
                //console.log(result.data);
                 let sourceCopyArr = [...result.data];
                 setContactList(sourceCopyArr);
-                //setHistoryList(hist)
+                console.log(contactList);
              })
     }, [flag]);
 
@@ -92,7 +93,12 @@ const ContactSource = props => {
         {
             contactList.map((contact, index) => {
                 return(
-                    <ContactDetail contact={contact} key={index} setContactList={setContactList} contactList={contactList} isFlag={isFlag} flag={flag} />
+                    <ContactDetail 
+                    contact={contact} 
+                    key={index} 
+                    flag={flag}
+                    isFlag={isFlag}
+                    />
                 )
             })
         }

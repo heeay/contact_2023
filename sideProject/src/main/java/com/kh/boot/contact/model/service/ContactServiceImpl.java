@@ -49,10 +49,12 @@ public class ContactServiceImpl implements ContactService {
 return contactMapper.deleteSource(contactName); 
 }
  
-	
-	 @Override public List<ContactHistory> selectHistoryList(String contactName) {
-	  
-	  return contactMapper.selectHistoryList(contactName); }
+
+ @Override 
+ public List<ContactHistory> selectHistoryList(String contactName) {
+  
+  return contactMapper.selectHistoryList(contactName); 
+  }
 	
  
 	/*
@@ -66,7 +68,7 @@ return contactMapper.deleteSource(contactName);
  public int insertHistory(ContactHistory contactHistory) {
 
 	 int result1 = contactMapper.insertHistory(contactHistory);// 만약 1이고 
-	 int result2 =contactMapper.updateLastDate(contactHistory); // 0이면 rollback되지 않고 insertHistory는 commit됨 => 예외처리해야함
+	 int result2 = contactMapper.updateLastDate(contactHistory); // 0이면 rollback되지 않고 insertHistory는 commit됨 => 예외처리해야함
 //	 if(result1*result2 > 0) {
 //		return result1 + result2;
 //	 } else {

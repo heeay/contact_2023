@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,7 +22,7 @@ import com.kh.boot.contact.model.vo.ContactSource;
 
 import lombok.RequiredArgsConstructor;
 
-@RestController
+@RestController // JSON을 리턴하는 웹 서비스임을 명시
 @CrossOrigin("*")
 @RequestMapping("/contact")
 @RequiredArgsConstructor 
@@ -31,6 +30,8 @@ public class ContactController {
 	
 	private final ContactService contactService;
 
+	// ResponseEntity : HTTP의 responseBody + status + header 모두 조작하고 싶을 때 사용
+	// ResponseDTO : HTTP responseBody만 조작
 	@GetMapping
 	public ResponseEntity<List<ContactSource>> selectSourceList(){ 
 		List<ContactSource> sourceList = contactService.selectSourceList();
@@ -72,7 +73,8 @@ public class ContactController {
 	
 	//연락기록전체조회
 	@GetMapping("/history/{contactName}")
-	public ResponseEntity<List<ContactHistory>> selectHistoryList(@PathVariable(name="contactName")String contactName){ 
+	public ResponseEntity<List<ContactHistory>> selectHistoryList(@PathVariable(name="contactName")String contactName){
+		//System.out.println(contactName);
 		List<ContactHistory> historyList = contactService.selectHistoryList(contactName);
 		HttpHeaders header = new HttpHeaders();
 		header.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
@@ -80,14 +82,18 @@ public class ContactController {
 	}
 	
 	// 연락기록 추가  +  곧바로 해당인물의 lastDate를 업데이트 
-	@SuppressWarnings("null")
+
 	@PostMapping("/history/{contactName}")
 	public ResponseEntity<String>insertHistory(
-												@RequestBody String contactContent,
+												@RequestBody ContactHistory contactHistory,
 												@PathVariable(name="contactName")String contactName){
+		/*
 		ContactHistory contactHistory = null;
 		contactHistory.setContactName(contactName);
 		contactHistory.setContactContent(contactContent);
+		System.out.println(contactHistory);
+		*/
+		
 		String insert = contactService.insertHistory(contactHistory) != 0 ? "success" : "fail";
 		HttpHeaders header = new HttpHeaders();
 		header.setContentType(new MediaType("text", "html", Charset.forName("UTF-8")));

@@ -4,10 +4,10 @@ import { useNavigate } from "react-router-dom";
 const ContactDetail = props => {
 
     /**상위컴포넌트에서 props로 받아온 값 뽑아내기 */
+    //console.log(props);
+    //const key = props.key;
     const contact = props.contact;
-    const contactList = props.contactList;
-    const setContactList = props.setContactList;
-  
+    console.log(contact);
     
     function deleteContact(e){
            axios.delete('/contact/' + e.target.id)
