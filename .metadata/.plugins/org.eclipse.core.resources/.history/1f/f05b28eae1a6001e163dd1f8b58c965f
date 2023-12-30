@@ -1,0 +1,107 @@
+package com.kh.boot.contact.model.service;
+
+import java.util.List;
+import org.springframework.stereotype.Service; 
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.transaction.annotation.Transactional;
+ import com.kh.boot.contact.model.dao.ContactMapper; 
+ import com.kh.boot.contact.model.vo.ContactHistory; 
+ import com.kh.boot.contact.model.vo.ContactSource;
+
+import lombok.RequiredArgsConstructor;
+ 
+
+@Service 
+@RequiredArgsConstructor
+@EnableTransactionManagement
+public class ContactServiceImpl implements ContactService {
+  
+	private final ContactMapper contactMapper;
+
+@Override 
+ public List<ContactSource> selectSourceList() {
+ 
+ return contactMapper.selectSourceList(); 
+ }
+
+ @Override 
+ public ContactSource selectSource(String contactName) {
+
+ return contactMapper.selectSource(contactName); 
+
+ }
+ 
+@Override 
+ public int insertSource(ContactSource contactSource) {
+ 
+ return contactMapper.insertSource(contactSource); 
+ }
+
+@Override 
+ public int updateSource(ContactSource contactSource) {
+
+  return contactMapper.updateSource(contactSource); 
+  }
+ 
+  @Override 
+ public int deleteSource(String contactName) {
+ 
+return contactMapper.deleteSource(contactName); 
+}
+ 
+
+ @Override 
+ public List<ContactHistory> selectHistoryList(String contactName) {
+  
+  return contactMapper.selectHistoryList(contactName); 
+  }
+	
+ 
+	/*
+	 * @Override public ContactHistory selectHistory(int contactNo) {
+	 * 
+	 * return contactMapper.selectHistory(contactNo); }
+	 */
+ 
+ @Transactional("transactionManager")
+ @Override 
+ public int insertHistory(ContactHistory contactHistory) {
+
+	 int result1 = contactMapper.insertHistory(contactHistory);// 만약 1이고 
+	 int result2 = contactMapper.updateLastDate(contactHistory); // 0이면 rollback되지 않고 insertHistory는 commit됨 => 예외처리해야함
+	 /*
+		 if(result1*result2 > 0) {
+			return result1 + result2;
+		 } else {
+			// 강제로 예외 발생시켜서 자동으로 rollback되게 해야함 ???
+	     }
+	  */ 
+
+	 if(result1 > 0 && result2 > 0) {
+		 return result1 + result2;
+	 }else {
+		 return 0;
+	 }
+
+ }
+
+	/*
+	 * @Override public int updateHistory(ContactHistory contactHistory) {
+	 * 
+	 * return contactMapper.updateHistory(contactHistory); }
+	 */
+
+@Override 
+ public int deleteHistory(int contactNo) {
+ 
+ return contactMapper.deleteHistory(contactNo); 
+ }
+
+	/*
+	 * @Override public int deleteAllHistory(String contactName) {
+	 * 
+	 * return contactMapper.deleteAllHistory(contactName); }
+	 */
+
+
+}

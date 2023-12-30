@@ -77,7 +77,7 @@ const ContactSource = () => {
                //console.log(result.data);
                 let sourceCopyArr = [...result.data];
                 setContactList(sourceCopyArr);
-                console.log(sourceCopyArr);
+                //console.log(sourceCopyArr);
              })
     }, [flag]);
 

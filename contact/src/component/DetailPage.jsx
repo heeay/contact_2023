@@ -52,6 +52,7 @@ const DetailPage = () => {
         }
     }
 
+    /* (sysdate - lastDate) >= 연락주기 : alert(contactName에게 연락하세요) */
     useEffect( () => {
         axios.get('/contact/history/' + state.contact.contactName)
              .then(result => {
@@ -62,14 +63,23 @@ const DetailPage = () => {
                     let historyCopyArr = [...result.data];
                     setHistoryList(historyCopyArr);  
                     // *** []값이 나옴 : console.log(historyList); => 원래 그럼!
-                    console.log(historyCopyArr);// arrayl맞음
-
-                }
+                    // console.log(historyCopyArr);// arrayl맞음
+                }     
              })
     }, [flag]);
 
-    
-
+    /*
+    useEffect( () => {
+        axios.get('/contact/alram/' + state.contact.contactName)      
+        .then(result => {
+            console.log(result);
+            if(result.data == 'success'){
+                alert(state.contact.contactName);
+            }                           
+        })
+    }, []);
+    */
+   
     return (
         <>
             <h1>{state.contact.contactName}</h1>

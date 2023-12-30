@@ -24,11 +24,18 @@ public class ContactServiceImpl implements ContactService {
  return contactMapper.selectSourceList(); 
  }
 
+
  @Override 
  public ContactSource selectSource(String contactName) {
 
  return contactMapper.selectSource(contactName); 
 
+ }
+ 
+ @Override
+ public int alram(String contactName) {
+ 	
+ 	return contactMapper.alram(contactName);
  }
  
 @Override 
@@ -69,27 +76,31 @@ return contactMapper.deleteSource(contactName);
 
 	 int result1 = contactMapper.insertHistory(contactHistory);// 만약 1이고 
 	 int result2 = contactMapper.updateLastDate(contactHistory); // 0이면 rollback되지 않고 insertHistory는 commit됨 => 예외처리해야함
-//	 if(result1*result2 > 0) {
-//		return result1 + result2;
-//	 } else {
-		// 강제로 예외 발생시켜서 자동으로 rollback되게 해야함
-	 return result1 + result2;
+	 
+	 /*
+		 if(result1*result2 > 0) {
+			return result1 + result2;
+		 } else {
+			// 강제로 예외 발생시켜서 자동으로 rollback되게 해야함 ???
+	     }
+	  */ 
+	 
+	 if(result1 > 0 && result2 > 0) {
+		 return result1 + result2;
+	 }else {
+		 return 0;
 	 }
- 
- 
- 
- 
-	/*
-	 * @Override public int updateHistory(ContactHistory contactHistory) {
-	 * 
-	 * return contactMapper.updateHistory(contactHistory); }
-	 */
+
+ }
+
 
 @Override 
  public int deleteHistory(int contactNo) {
  
  return contactMapper.deleteHistory(contactNo); 
  }
+
+
 
 	/*
 	 * @Override public int deleteAllHistory(String contactName) {

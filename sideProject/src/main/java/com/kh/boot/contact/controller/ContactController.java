@@ -32,6 +32,8 @@ public class ContactController {
 
 	// ResponseEntity : HTTP의 responseBody + status + header 모두 조작하고 싶을 때 사용
 	// ResponseDTO : HTTP responseBody만 조작
+	
+	// 연락처 전체조회 
 	@GetMapping
 	public ResponseEntity<List<ContactSource>> selectSourceList(){ 
 		List<ContactSource> sourceList = contactService.selectSourceList();
@@ -48,7 +50,15 @@ public class ContactController {
 		header.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
 		return new ResponseEntity<ContactSource>(source, header, HttpStatus.OK);
 	}
-
+	
+	// 알림서비스
+	@GetMapping("/alram/{contactName}")
+	public ResponseEntity<String> alram(@PathVariable(name="contactName")String contactName){
+		String alram = contactService.alram(contactName) != 0 ? "success" : "fail";
+		HttpHeaders header = new HttpHeaders();
+		header.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
+		return new ResponseEntity<String>(alram, header, HttpStatus.OK);
+	}
 
 	
 	// 연락처 추가
@@ -71,7 +81,7 @@ public class ContactController {
 	}
 	
 	
-	//연락기록전체조회
+	// 연락기록전체조회
 	@GetMapping("/history/{contactName}")
 	public ResponseEntity<List<ContactHistory>> selectHistoryList(@PathVariable(name="contactName")String contactName){
 		//System.out.println(contactName);
@@ -81,8 +91,7 @@ public class ContactController {
 		return new ResponseEntity<List<ContactHistory>>(historyList, header, HttpStatus.OK);
 	}
 	
-	// 연락기록 추가  +  곧바로 해당인물의 lastDate를 업데이트 
-
+	// 연락기록 추가  + 곧바로 해당인물의 lastDate를 업데이트 
 	@PostMapping("/history/{contactName}")
 	public ResponseEntity<String>insertHistory(
 												@RequestBody ContactHistory contactHistory,
@@ -122,14 +131,7 @@ public class ContactController {
 		return new ResponseEntity<ContactHistory>(history, header, HttpStatus.OK);
 	}
 	
-	// 연락기록 추가  +  곧바로 해당인물의 lastDate를 업데이트 
-	@PostMapping
-	public ResponseEntity<String>insertHistory(@RequestBody ContactHistory contactHistory){
-		String insert = contactService.insertHistory(contactHistory) != 0 ? "success" : "fail";
-		HttpHeaders header = new HttpHeaders();
-		header.setContentType(new MediaType("text", "html", Charset.forName("UTF-8")));
-		return new ResponseEntity<String>(insert, header, HttpStatus.OK);
-	}
+
 	
 	// 연락기록 수정 *****************************************************
 	@PutMapping

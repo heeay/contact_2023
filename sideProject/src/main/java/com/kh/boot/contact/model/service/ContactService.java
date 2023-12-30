@@ -11,6 +11,7 @@ public interface ContactService {
 	 // 해당 연락망 조회 및 전체연락기록 조회
 	 ContactSource selectSource(String contactName);
 	 List<ContactHistory> selectHistoryList(String contactName);
+	 int alram(String contactName);
 	 
 	// 연락망 추가/수정/삭제 
 	 int insertSource(ContactSource contactSource);  

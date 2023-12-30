@@ -17,6 +17,6 @@
 		private int contactNo;
 		private String contactName;
 		private String contactContent;
-		private Date contactDate;
+		private String contactDate;
 
 	}

@@ -80,6 +80,19 @@
 						S.CONTACT_NAME
 	</select>
 	
+	<!-- 연락주기별 알림설정 -->
+	<select id="alram" resultType="_int" parameterType="string">
+	SELECT 
+			COUNT(*)
+	FROM 
+			CONTACT_SOURCE
+	WHERE 
+			( SYSDATE - TO_DATE(LAST_DATE, "YYYY-MM-DD HH24:MI:SS") ) >= CONTACT_PERIOD 
+	AND  
+			CONTACT_NAME = #{ contactName }
+	</select>
+	
+	
 	<!-- 연락처 추가 -->
 	<insert id="insertSource" parameterType="ContactSource">
 		INSERT
@@ -91,7 +104,7 @@
 						#{ contactImage },
 						#{ contactGroup },
 						#{ contactPhone },
-						SYSDATE,<!-- 기본 설정 -->
+						TO_CHAR(SYSDATE, "YYYY-MM-DD HH24:MI:SS"),<!-- 기본 설정 -->
 						#{ contactPeriod }
 						)
 	</insert>
@@ -145,7 +158,7 @@
 						SEQ_CONTACT_NO.NEXTVAL,
 						#{ contactName },
 						#{ contactContent },
-						SYSDATE
+						TO_CHAR(SYSDATE, "YYYY-MM-DD HH24:MI:SS")
 						)
 	</insert>
 	
@@ -154,7 +167,7 @@
 		UPDATE
 						CONTACT_SOURCE
 		SET
-						LAST_DATE = SYSDATE
+						LAST_DATE = TO_CHAR(SYSDATE, "YYYY-MM-DD HH24:MI:SS")
 		WHERE   
 						CONTACT_NAME = #{ contactName }
 	</update>

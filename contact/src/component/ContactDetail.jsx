@@ -39,6 +39,9 @@ const ContactDetail = props => {
                 <p>{contact.contactPhone}</p>
             </div>
             <div>
+                <p>{contact.lastDate}</p>
+            </div>
+            <div>
                 <button onClick={deleteContact} id={contact.contactName}>삭제</button>
             </div>
         </>

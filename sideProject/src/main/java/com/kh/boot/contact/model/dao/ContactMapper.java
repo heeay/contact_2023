@@ -12,7 +12,8 @@ public interface ContactMapper {
 
 	 List<ContactSource> selectSourceList(); 
 	 ContactSource selectSource(String contactName);
-
+	 int alram(String contactName);
+	 
 	 int insertSource(ContactSource contactSource); 
 	 int updateSource(ContactSource contactSource); 
 	 int deleteSource(String contactName);

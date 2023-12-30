@@ -17,7 +17,7 @@ public class ContactSource {
 	private String contactImage;
 	private String contactGroup;
 	private String contactPhone;
-	private Date lastDate;
+	private String lastDate;
 	private int contactPeriod;
 	private List<ContactHistory> contactHistory;
 
