@@ -56,13 +56,14 @@ const DetailPage = () => {
         axios.get('/contact/history/' + state.contact.contactName)
              .then(result => {
                 console.log(result);
-                if(result.data == null){
+                if(result.data == ''){
                     console.log('연락기록 없음');
                 } else{
-                    console.log(result.data)
                     let historyCopyArr = [...result.data];
                     setHistoryList(historyCopyArr);  
                     // *** []값이 나옴 : console.log(historyList); => 원래 그럼!
+                    console.log(historyCopyArr);// arrayl맞음
+
                 }
              })
     }, [flag]);
@@ -73,7 +74,11 @@ const DetailPage = () => {
         <>
             <h1>{state.contact.contactName}</h1>
             <br/>
-            <Container>
+            <div>
+                <img src={state.contact.contactImage} alt="연락처" />
+            </div>
+
+            {/* <Container>
                 <Row>
                     <Col xs={6}><img src={state.contact.contactImage} width="100%" height="500"/></Col>
                 </Row>
@@ -86,6 +91,7 @@ const DetailPage = () => {
                 <Row>
                     <Col xs={6}><p>{state.contact.contactHistory}</p></Col>
                 </Row>
+            </Container> */}
 
                 <div id="history-enroll-form">
                     <div>
@@ -96,13 +102,12 @@ const DetailPage = () => {
                     <button onClick={addHistory} id={state.contact.contactName}>연락내용 추가</button>
                 </div>
 
-            </Container>
 
             {
-                historyList.map( (history, index) => 
+                historyList.map( (history, i) => 
                         <HistoryDetail
                         history={history}
-                        key={index}
+                        key={i}
                         />    
                 )
             }

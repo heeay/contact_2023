@@ -6,7 +6,6 @@ import { useEffect, useState } from 'react';
 const ContactSource = () => {
 
     const [contactList, setContactList] = useState([]);
-    
 
     const [contactName, setContactName] = useState('');
     const [contactImage, setContactImage] = useState('');
@@ -14,7 +13,6 @@ const ContactSource = () => {
     const [contactPhone, setContactPhone] = useState('');
     const [contactPeriod, setContactPeriod] = useState('');
   
-
     /** setting함수로 입력값 받기 */
     const inputContactName = e => {
         setContactName(e.target.value);
@@ -31,11 +29,6 @@ const ContactSource = () => {
     const inputContactPeriod = e => {
         setContactPeriod(e.target.value);
     }
-
-
- 
-
-
 
 
     /**변경여부를 확인하는 용도의 state */
@@ -84,7 +77,7 @@ const ContactSource = () => {
                //console.log(result.data);
                 let sourceCopyArr = [...result.data];
                 setContactList(sourceCopyArr);
-                console.log(contactList);
+                console.log(sourceCopyArr);
              })
     }, [flag]);
 

@@ -7,7 +7,7 @@ const ContactDetail = props => {
     //console.log(props);
     //const key = props.key;
     const contact = props.contact;
-    console.log(contact);
+    //console.log(contact);
     
     function deleteContact(e){
            axios.delete('/contact/' + e.target.id)
@@ -21,7 +21,7 @@ const ContactDetail = props => {
     const navigate = useNavigate();
 
     const detailPage = () => {
-       navigate("/detailPage", {state : {contact : contact }});
+       navigate("/detailPage", {state : {contact : contact}});
     }
 
     return (

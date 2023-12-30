@@ -23,7 +23,7 @@ import com.kh.boot.contact.model.vo.ContactSource;
 import lombok.RequiredArgsConstructor;
 
 @RestController // JSON을 리턴하는 웹 서비스임을 명시
-@CrossOrigin("*") //
+@CrossOrigin("*")
 @RequestMapping("/contact")
 @RequiredArgsConstructor 
 public class ContactController {
